@@ -83,27 +83,45 @@ The prompts used in the `aiService.ts` layer are designed using the following be
 
 **Description:** Automatically assigns primary categories, sub-categories, SEO tags, and sustainability tags (like plastic-free, compostable, vegan) to a product based on its name and description using an LLM. The output is structured JSON stored in the database.
 
-**How to Run (Test via PowerShell):**
+**How to Run Locally (Test via PowerShell):**
 Make sure the server is running (`npm run dev`), then open a new PowerShell terminal and run:
 
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:3000/api/products/categorize" -Method Post -Headers @{"Content-Type"="application/json"} -Body '{"name": "Bamboo Toothbrush", "description": "A 100% biodegradable bamboo toothbrush with soft charcoal bristles."}' | ConvertTo-Json -Depth 5
 ```
 
-Alternatively, view any processed products in your browser at: `http://localhost:3000/api/products`
+Alternatively, view any locally processed products in your browser at: `http://localhost:3000/api/products`
+
+**How to Run Live Deployment (Test via PowerShell):**
+If testing against the live Render server, run:
+
+```powershell
+Invoke-RestMethod -Uri "https://ai-sustainable-system.onrender.com/api/products/categorize" -Method Post -Headers @{"Content-Type"="application/json"} -Body '{"name": "Organic Cotton T-Shirt", "description": "A 100% organic cotton graphic t-shirt made with eco-friendly dyes."}' | ConvertTo-Json -Depth 5
+```
+
+Alternatively, view any live processed products in your browser at: `https://ai-sustainable-system.onrender.com/api/products`
 
 ### Module 3: AI Impact Reporting Generator
 
 **Description:** Calculates the estimated plastic saved and carbon emissions avoided based on the order's items. It handles complex business logic mathematically and uses the AI purely to draft an inspiring, human-readable impact statement that can be sent to customers.
 
-**How to Run (Test via PowerShell):**
+**How to Run Locally (Test via PowerShell):**
 With the server running, open a new PowerShell terminal and execute:
 
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:3000/api/impact/generate" -Method Post -Headers @{"Content-Type"="application/json"} -Body '{"orderId": "ORD-12345", "items": [{"id": 1}, {"id": 2}], "isLocalSourced": true}' | ConvertTo-Json -Depth 5
 ```
 
-Alternatively, view any generated impact reports in your browser at: `http://localhost:3000/api/impact`
+Alternatively, view any locally generated impact reports in your browser at: `http://localhost:3000/api/impact`
+
+**How to Run Live Deployment (Test via PowerShell):**
+If testing against the live Render server, execute:
+
+```powershell
+Invoke-RestMethod -Uri "https://ai-sustainable-system.onrender.com/api/impact/generate" -Method Post -Headers @{"Content-Type"="application/json"} -Body '{"orderId": "LIVE-ORD-12345", "items": [{"id": 1}, {"id": 2}], "isLocalSourced": true}' | ConvertTo-Json -Depth 5
+```
+
+Alternatively, view any live generated impact reports in your browser at: `https://ai-sustainable-system.onrender.com/api/impact`
 
 ---
 
